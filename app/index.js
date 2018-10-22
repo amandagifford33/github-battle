@@ -1,5 +1,5 @@
 var React = require('react');
-var ReactDOM = requre('react-dom');
+var ReactDOM = require('react-dom');
 require('index.css');
 
 // state
@@ -17,6 +17,6 @@ class App extends React.Component {
 }
 
 ReactDOM.render(
-    <App/>,
+    <App />,
     document.getElementById('app')
 )
