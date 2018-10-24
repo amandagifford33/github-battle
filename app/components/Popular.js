@@ -2,6 +2,35 @@ var React = require('react');
 var PropTypes = require('prop-types');
 var api = require('../utils/api');
 
+function ReposGrid (props) {
+    return (
+        <ul className='popular-list'>
+            {props.repos.map (function (repo, index) {
+                <li key={repo.name} className='popular-item'>
+                    <div className='popular-rank'>#{index + 1}</div>
+                    <ul className='space-list-items'>
+                        <li>
+                            <img 
+                            className='avatar'
+                            src={repo.owner.avatar_url}
+                            alt={'Avatar for ' + repo.owner.login} 
+                            />
+                        </li>
+                        <li><a href={repo.html_url}>{repo.name}</a></li>
+                        <li>@{repo.owner.login}</li>
+                        <li>{repo.stargazers_count} stars</li>
+                     </ul>
+                </li>
+                )
+            })}
+        </ul>
+    )
+}
+
+RepoGrid.propTypes = {
+    repos: PropTypes.array.isRequired
+}
+
 function SelectLanguage (props) {
     var languages = ['All', 'Javascript', 'Ruby', 'CSS', 'Java', 'Python'];
         return (
@@ -62,16 +91,18 @@ class Popular extends React.Component {
                     repos: repos
                 }
             })
-        });
+        }.bind(this));
     }
     render() {
-        
         return (
            <div>
                <SelectLanguage
                 selectedLanguage={this.state.selectedLanguage}
                 onSelect={this.updateLanguage}
                />
+               {!this.state.repos
+                    ?<p>LOADING</p>
+                    : <RepoGrid repos={this.state.repos} />}
            </div>
         )
     }
