@@ -70,7 +70,9 @@ class Popular extends React.Component {
         you pass in */ /* The whole point of this line right here is to make it so that the this keyword inside
         updateLanguage always refers to the component instance itself which will have a setState property */
     }
-    componentDidMount () {
+    componentDidMount () { /*when component mounts, we go in 
+        and fetch the most popular repos from github. When we get back
+        a response, we are calling this.setState on api.fetchPopularRepos().*/
        this.updateLanguage(this.state.selectedLanguage);
     }
     /* new method */updateLanguage(lang) {
@@ -87,7 +89,8 @@ class Popular extends React.Component {
 
         api.fetchPopularRepos(lang)
         .then(function (repos) {
-            this.setState(function () {
+            this.setState(function () { /*setState triggers a re-render based on that new state...Jump
+                dow to !this.state.repos...*/
                 return {
                     repos: repos
                 }
@@ -101,7 +104,7 @@ class Popular extends React.Component {
                 selectedLanguage={this.state.selectedLanguage}
                 onSelect={this.updateLanguage}
                />
-               {!this.state.repos
+               {!this.state.repos/*instead of getting loading, we get a new repositories grid*/
                     ?<p>LOADING</p>
                     : <RepoGrid repos={this.state.repos} />}
            </div>
