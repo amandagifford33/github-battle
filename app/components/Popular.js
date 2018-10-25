@@ -104,7 +104,8 @@ class Popular extends React.Component {
                 selectedLanguage={this.state.selectedLanguage}
                 onSelect={this.updateLanguage}
                />
-               {!this.state.repos/*instead of getting loading, we get a new repositories grid*/
+               {!this.state.repos/*instead of getting loading, we get a new repositories grid, and then
+               repeat that whole cycle*/
                     ?<p>LOADING</p>
                     : <RepoGrid repos={this.state.repos} />}
            </div>
