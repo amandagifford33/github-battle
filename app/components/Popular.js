@@ -2,10 +2,30 @@ var React = require('react');
 var PropTypes = require('prop-types');
 var api = require('../utils/api');
 
-function ReposGrid (props) {
+function SelectLanguage (props) {
+    var languages = ['All', 'Javascript', 'Ruby', 'CSS', 'Java', 'Python'];
+        return (
+            <ul className='languages'>
+            {languages.map(function (lang) {
+                return (
+                    <li
+                        style={lang === props.selectedLanguage ? { color: '#d0021b' } : null}
+                        onClick={props.onSelect.bind(null, lang)/*returns us a new function, onClick
+                        that new function is invoked, and passed specific lang that was clicked on */}
+                        key={lang}>
+                        {lang}
+                    </li>
+                )
+            })}
+        </ul> 
+        )
+}
+
+function RepoGrid (props) {
     return (
         <ul className='popular-list'>
             {props.repos.map (function (repo, index) {
+                return (
                 <li key={repo.name} className='popular-item'>
                     <div className='popular-rank'>#{index + 1}</div>
                     <ul className='space-list-items'>
@@ -28,26 +48,7 @@ function ReposGrid (props) {
 }
 
 RepoGrid.propTypes = {
-    repos: PropTypes.array.isRequired
-}
-
-function SelectLanguage (props) {
-    var languages = ['All', 'Javascript', 'Ruby', 'CSS', 'Java', 'Python'];
-        return (
-            <ul className='languages'>
-            {languages.map(function (lang) {
-                return (
-                    <li
-                        style={lang === props.selectedLanguage ? { color: '#d0021b' } : null}
-                        onClick={props.onSelect.bind(null, lang)/*returns us a new function, onClick
-                        that new function is invoked, and passed specific lang that was clicked on */}
-                        key={lang}>
-                        {lang}
-                    </li>
-                )
-            })}
-        </ul> 
-        )
+    repos: PropTypes.array.isRequired,
 }
 
 SelectLanguage.propTypes = {
@@ -58,7 +59,7 @@ SelectLanguage.propTypes = {
 
 class Popular extends React.Component {
     constructor (props) {
-        super(props);
+        super();
         this.state = {
             /* new property */selectedLanguage: 'All',/* default state */
             repos: null,
@@ -90,7 +91,7 @@ class Popular extends React.Component {
                 return {
                     repos: repos
                 }
-            })
+            });
         }.bind(this));
     }
     render() {
