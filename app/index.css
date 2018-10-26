@@ -18,6 +18,10 @@ a {
     max-width: 1200px;
     margin: 0 auto;
 }
+.row {
+    display: flex;
+    justify-content: space-around;
+}
 
 .languages {
     display: flex;
@@ -62,6 +66,19 @@ a {
 
 .active {
     font-weight: bold;
+}
+
+.reset {
+    border: none;
+    background: transparent;
+    color: #d0021b;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.reset:hover {
+    cursor: pointer;
 }
 
 .nav li {

@@ -10,8 +10,8 @@ function SelectLanguage (props) {
                 return (
                     <li
                         style={lang === props.selectedLanguage ? { color: '#d0021b' } : null}
-                        onClick={props.onSelect.bind(null, lang)/*returns us a new function, onClick
-                        that new function is invoked, and passed specific lang that was clicked on */}
+                        onClick={props.onSelect.bind(null, lang)}/*returns us a new function, onClick
+                        that new function is invoked, and passed specific lang that was clicked on */
                         key={lang}>
                         {lang}
                     </li>
@@ -75,12 +75,13 @@ class Popular extends React.Component {
         a response, we are calling this.setState on api.fetchPopularRepos().*/
        this.updateLanguage(this.state.selectedLanguage);
     }
-    /* new method */updateLanguage(lang) {
+    updateLanguage(lang) {/*new method*/
         /* dont know what the 'this' is bound to 
         until you invoke update language */ /* problem is that
         if updateLanguage is invoked in the wrong context, 'this' is going
         to be different, and as a result this.setState will
-        be undefined */ /* pass it a function */this.setState(function () {
+        be undefined */ /* pass it a function */
+        this.setState(function () {
             return {
                 selectedLanguage: lang,
                 repos: null
@@ -88,7 +89,10 @@ class Popular extends React.Component {
         });
 
         api.fetchPopularRepos(lang)
-        .then(function (repos) {
+        .then(function (repos/*items*/) { /* double asynchronous function because there
+            is a .then in fetchPopularRepos, after everything has run, then .then will run.
+            Run api.fetchPopularRepos is a call out to html.. javascript is lazy and going to run this
+            .then funtion when api finishes*/
             this.setState(function () { /*setState triggers a re-render based on that new state...Jump
                 dow to !this.state.repos...*/
                 return {
